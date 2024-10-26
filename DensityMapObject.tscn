@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsmc3o6hnwlhe"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xku5x"]
+blend_mode = 1
+
+[node name="DensityMapObject" type="ColorRect"]
+material = SubResource("CanvasItemMaterial_xku5x")

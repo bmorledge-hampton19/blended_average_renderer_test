@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://3iikuffn76s5"]
+
+[ext_resource type="Shader" path="res://BlendedAverageRenderer.gdshader" id="1_0xhbo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_62qcb"]
+shader = ExtResource("1_0xhbo")
+shader_parameter/maxRenderedObjects = null
+
+[node name="MainObject" type="ColorRect"]
+material = SubResource("ShaderMaterial_62qcb")

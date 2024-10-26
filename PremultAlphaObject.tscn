@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl8okkrfebw6s"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4dyk8"]
+blend_mode = 4
+
+[node name="PremultAlphaObject" type="ColorRect"]
+material = SubResource("CanvasItemMaterial_4dyk8")

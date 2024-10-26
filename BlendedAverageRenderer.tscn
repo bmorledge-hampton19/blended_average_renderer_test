@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://c6g1rnmv0lfsn"]
+
+[ext_resource type="Script" path="res://BlendedAverageRenderer.gd" id="1_fkyqv"]
+[ext_resource type="PackedScene" uid="uid://dsmc3o6hnwlhe" path="res://DensityMapObject.tscn" id="2_u4720"]
+[ext_resource type="PackedScene" uid="uid://dl8okkrfebw6s" path="res://PremultAlphaObject.tscn" id="3_iio4v"]
+[ext_resource type="PackedScene" uid="uid://3iikuffn76s5" path="res://MainObject.tscn" id="4_y2ptm"]
+[ext_resource type="Shader" path="res://MainRenderer.gdshader" id="5_e3hg2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p53jv"]
+resource_local_to_scene = true
+shader = ExtResource("5_e3hg2")
+
+[node name="BlendedAverageRenderer" type="Control" node_paths=PackedStringArray("background", "densityMap", "premultAlphaMap", "mainRenderer")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("1_fkyqv")
+whichTest = 5
+maxRenderedObjects = 4.0
+background = NodePath("Background")
+densityMap = NodePath("DensityMapViewport/DensityMap")
+premultAlphaMap = NodePath("PremultAlphaMapViewport/PremultAlphaMap")
+mainRenderer = NodePath("MainRenderer")
+densityMapObjectPS = ExtResource("2_u4720")
+premultAlphaObjectPS = ExtResource("3_iio4v")
+mainObjectPS = ExtResource("4_y2ptm")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="DensityMapViewport" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 478.0
+offset_right = 1164.0
+offset_bottom = 1126.0
+scale = Vector2(0.25, 0.25)
+
+[node name="DensityMap" type="SubViewport" parent="DensityMapViewport"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="PremultAlphaMapViewport" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_left = 852.0
+offset_top = 475.0
+offset_right = 1140.0
+offset_bottom = 637.0
+scale = Vector2(0.25, 0.25)
+
+[node name="PremultAlphaMap" type="SubViewport" parent="PremultAlphaMapViewport"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="MainRenderer" type="CanvasGroup" parent="."]
+material = SubResource("ShaderMaterial_p53jv")
