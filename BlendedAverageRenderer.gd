@@ -15,7 +15,7 @@ enum Test {
 # The three render layers
 @export var densityMap: SubViewport # Records how many objects intersect at each position
 @export var premultAlphaMap: SubViewport # Records mixed alpha of objects
-@export var mainRenderer: CanvasGroup # Visible layer. Combines information from SubViewports.
+@export var mainRendererCG: CanvasGroup # Visible layer. Combines information from SubViewports.
 
 # Packed scenes for the objects to be added to each layer.
 @export var densityMapObjectPS: PackedScene
@@ -31,7 +31,7 @@ func _ready():
 	mainObjectPS = mainObjectPS.duplicate(true)
 
 	# Initialize the main renderer's shader.
-	mainRenderer.material.set_shader_parameter("premultAlphaMap", premultAlphaMap.get_texture())
+	mainRendererCG.material.set_shader_parameter("premultAlphaMap", premultAlphaMap.get_texture())
 
 	# Set the background color
 	background.color = backgroundColor
@@ -88,15 +88,13 @@ func addObject(objectPosition: Vector2, objectSize: Vector2, objectColor: Color)
 
 	# Add the object to the main renderer.
 	var mainObject: ColorRect = mainObjectPS.instantiate()
-	mainRenderer.add_child(mainObject)
+	mainRendererCG.add_child(mainObject)
 	mainObject.position = objectPosition
 	mainObject.size = objectSize
 	mainObject.color = objectColor
 
 	# If this is the first object we've added, initialize the shader uniforms.
 	if not haveMainObjectShaderParamsBeenSet:
-		print("Setting shaders...")
 		mainObject.material.set_shader_parameter("densityMap", densityMap.get_texture())
 		mainObject.material.set_shader_parameter("maxRenderedObjects", maxRenderedObjects)
-		print("Done!")
 		haveMainObjectShaderParamsBeenSet = true
